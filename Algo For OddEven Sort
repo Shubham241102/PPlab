@@ -1,0 +1,30 @@
+Here's a more numerical representation of the algorithm for the given code:
+
+1. Include necessary header files (stdio.h, stdlib.h, omp.h).
+2. Define a constant SIZE with a value of 100000.
+3. Define the `oddEvenSort` function.
+4. In the main function:
+a. Initialize an array `arr` of size SIZE.
+b. Fill the array with random values.
+c. Perform serial odd-even sort, measure its execution time, and print the result.
+d. Reinitialize the array with random values.
+e. Perform parallel odd-even sort, measure its execution time, and print the result.
+f. Print the sorted array.
+5. Inside the `oddEvenSort` function:
+a. Set `phase = 0`, `i`, `temp`.
+b. Use `#pragma omp parallel shared(arr, n) private(i, temp, phase)`:
+   i. For `phase = 0` to `n-1`:
+      1. If `phase % 2 == 0` (even phase):
+         a. Use `#pragma omp for`:
+            i. For `i = 1` to `n-1` with a step of 2:
+               1. If `arr[i - 1] > arr[i]`:
+                 a. Set `temp = arr[i - 1]`.
+                 b. Set `arr[i - 1] = arr[i]`.
+                 c. Set `arr[i] = temp`.
+      2. Else (odd phase):
+         a. Use `#pragma omp for`:
+            i. For `i = 1` to `n-2` with a step of 2:
+               1. If `arr[i] > arr[i + 1]`:
+                 a. Set `temp = arr[i]`.
+                 b. Set `arr[i] = arr[i + 1]`.
+                 c. Set `arr[i + 1] = temp`.
