@@ -1,0 +1,40 @@
+Certainly! Here's a more numerical representation of the algorithm:
+
+1. Read `n` (number of vertices).
+2. Read adjacency matrix `graph[n][n]`.
+3. Read `start_vertex`.
+4. Perform serial BFS:
+a. Initialize `queue`, `front = 0`, `rear = 0`.
+b. For `i = 0` to `n-1`:
+   i. Set `visited[i] = 0`.
+   ii. Set `level[i] = INT_MAX`.
+c. Set `visited[start_vertex] = 1`.
+d. Set `level[start_vertex] = 0`.
+e. Enqueue `start_vertex` (`queue[rear++] = start_vertex`).
+f. While `front != rear`:
+   i. Dequeue `u` (`u = queue[front++]`).
+   ii. For `v = 0` to `n-1`:
+      1. If `graph[u][v] == 1` and `visited[v] == 0`:
+         a. Set `visited[v] = 1`.
+         b. Set `level[v] = level[u] + 1`.
+         c. Enqueue `v` (`queue[rear++] = v`).
+5. Perform parallel BFS:
+a. Initialize `queue`, `front = 0`, `rear = 0`.
+b. Parallel for `i = 0` to `n-1`:
+   i. Set `visited[i] = 0`.
+   ii. Set `level[i] = INT_MAX`.
+c. Set `visited[start_vertex] = 1`.
+d. Set `level[start_vertex] = 0`.
+e. Enqueue `start_vertex` (`queue[rear++] = start_vertex`).
+f. While `front != rear`:
+   i. Dequeue `u` (`u = queue[front++]`).
+   ii. Parallel for `v = 0` to `n-1`:
+      1. If `graph[u][v] == 1` and `visited[v] == 0`:
+         a. Enter critical section.
+         b. If `visited[v] == 0`:
+            i. Set `visited[v] = 1`.
+            ii. Set `level[v] = level[u] + 1`.
+            iii. Enqueue `v` (`queue[rear++] = v`).
+         c. Exit critical section.
+6. Print execution times for serial and parallel BFS.
+
