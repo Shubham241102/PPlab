@@ -1,0 +1,38 @@
+Here's a more numerical representation of the algorithm for the given code:
+
+1. Include necessary header files (stdio.h, stdlib.h, omp.h).
+2. Define the `swap`, `partition`, `quickSort`, `generateArray`, and `printArray` functions.
+3. In the main function:
+a. Set `n = 10000` (size of the array).
+b. Initialize two arrays `arr_serial` and `arr_parallel` of size `n`.
+c. Fill the `arr_serial` array with random values.
+d. Copy the contents of `arr_serial` to `arr_parallel`.
+e. Perform serial quick sort, measure its execution time, and print the result.
+f. Perform parallel quick sort, measure its execution time, and print the result.
+g. Print both sorted arrays.
+4. Inside the `swap` function:
+a. Set `t = *a`.
+b. Set `*a = *b`.
+c. Set `*b = t`.
+5. Inside the `partition` function:
+a. Set `pivot = arr[high]`.
+b. Set `i = low - 1`.
+c. For `j = low` to `high - 1`:
+   i. If `arr[j] < pivot`:
+      1. Increment `i`.
+      2. Call `swap(&arr[i], &arr[j])`.
+d. Call `swap(&arr[i + 1], &arr[high])`.
+e. Return `i + 1`.
+6. Inside the `quickSort` function:
+a. If `low < high`:
+   i. Set `pi = partition(arr, low, high)`.
+   ii. Use `#pragma omp parallel sections`:
+      1. In the first section, call `quickSort(arr, low, pi - 1)`.
+      2. In the second section, call `quickSort(arr, pi + 1, high)`.
+7. Inside the `generateArray` function:
+a. For `i = 0` to `n - 1`:
+   i. Set `arr[i] = rand() % 1000`.
+8. Inside the `printArray` function:
+a. For `i = 0` to `n - 1`:
+   i. Print `arr[i]`.
+b. Print a newline.
