@@ -1,0 +1,48 @@
+Here's a more numerical representation of the algorithm for the given code:
+
+1. Include necessary header files (stdio.h, stdlib.h, omp.h).
+2. Define the `merge`, `merge_sort`, and `parallel_merge_sort` functions.
+3. In the main function:
+a. Read the size of the array `n`.
+b. Read the elements of the array `arr`.
+c. Perform serial merge sort, measure its execution time, and print the result.
+d. Perform parallel merge sort, measure its execution time, and print the result.
+e. Print the sorted array.
+4. Inside the `merge` function:
+a. Set `i = 0`, `j = 0`, `k = 0`.
+b. While `i < left_size` and `j < right_size`:
+   i. If `left[i] < right[j]`:
+      1. Set `arr[k++] = left[i++]`.
+   ii. Else:
+      1. Set `arr[k++] = right[j++]`.
+c. While `i < left_size`:
+   i. Set `arr[k++] = left[i++]`.
+d. While `j < right_size`:
+   i. Set `arr[k++] = right[j++]`.
+5. Inside the `merge_sort` function:
+a. If `size <= 1`:
+   i. Return.
+b. Set `mid = size / 2`.
+c. Initialize `left[mid]` and `right[size - mid]`.
+d. For `i = 0` to `mid-1`:
+   i. Set `left[i] = arr[i]`.
+e. For `i = mid` to `size-1`:
+   i. Set `right[i - mid] = arr[i]`.
+f. Call `merge_sort(left, mid)`.
+g. Call `merge_sort(right, size - mid)`.
+h. Call `merge(arr, left, mid, right, size - mid)`.
+6. Inside the `parallel_merge_sort` function:
+a. If `size <= 1`:
+   i. Return.
+b. Set `mid = size / 2`.
+c. Initialize `left[mid]` and `right[size - mid]`.
+d. Use `#pragma omp parallel sections`:
+   i. In the first section:
+      1. For `i = 0` to `mid-1`:
+         a. Set `left[i] = arr[i]`.
+      2. Call `parallel_merge_sort(left, mid)`.
+   ii. In the second section:
+      1. For `i = mid` to `size-1`:
+         a. Set `right[i - mid] = arr[i]`.
+      2. Call `parallel_merge_sort(right, size - mid)`.
+e. Call `merge(arr, left, mid, right, size - mid)`.
